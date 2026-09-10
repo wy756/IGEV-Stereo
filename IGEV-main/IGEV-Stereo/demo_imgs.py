@@ -47,9 +47,9 @@ def demo(args):
             disp = model(image1, image2, iters=args.valid_iters, test_mode=True)
             disp = disp.cpu().numpy()
             disp = padder.unpad(disp)
-            file_stem = imfile1.split('/')[-2]
+            file_stem = Path(imfile1).stem
             filename = os.path.join(output_directory, f"{file_stem}.png")
-            plt.imsave(output_directory / f"{file_stem}.png", disp.squeeze(), cmap='jet')
+            plt.imsave(output_directory / f"{file_stem}.png",disp.squeeze(),cmap='jet',vmin=0,vmax=192)
             if args.save_numpy:
                 np.save(output_directory / f"{file_stem}.npy", disp.squeeze())
             # disp = np.round(disp * 256).astype(np.uint16)
